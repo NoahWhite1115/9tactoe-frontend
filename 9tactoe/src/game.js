@@ -15,23 +15,23 @@ class Game extends React.Component {
       status: 'Waiting for another player...',
     }
 
-    socket.on('boards', boards => {
+    this.props.socket.on('boards', boards => {
       this.setState({boards: boards})
     });
 
-    socket.on('wonboards', wonBoards => {
+    this.props.socket.on('wonboards', wonBoards => {
       this.setState({wonBoards: wonBoards})
     });
 
-    socket.on('lastPlayed', lastPlayed => {
+    this.props.socket.on('lastPlayed', lastPlayed => {
       this.setState({lastPlayed: lastPlayed})
     });
 
-    socket.on('x_or_o', x_or_o => {
+    this.props.socket.on('x_or_o', x_or_o => {
       this.setState({x_or_o: x_or_o})
     });
 
-    socket.on('turn', player => {
+    this.props.socket.on('turn', player => {
       if (player === this.state.x_or_o) {
         this.setState({status: "You're up.", yourTurn: true})
       } else {
@@ -39,7 +39,7 @@ class Game extends React.Component {
       }
     });
 
-    socket.on('victory', player => {
+    this.props.socket.on('victory', player => {
       if (player === this.state.color) {
         this.setState({status: 'You win!', yourTurn: false})
       } else {
@@ -47,12 +47,12 @@ class Game extends React.Component {
       }
     });
 
-    socket.emit('join', {gid:props, username:this.state.x_or_o})
+    this.props.socket.emit('join', {gid:props, username:this.state.x_or_o})
   }
 
   handleClick(i,j) {
     console.log("Sending click: " + i + " " + j);
-    socket.emit('click', {i:i, j:j});
+    this.props.socket.emit('click', {i:i, j:j});
   }
 
   render() {

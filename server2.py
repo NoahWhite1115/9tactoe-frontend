@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app)
 
-gameManager = NineXOGameManager()
+gameManager = NineXOGameManager(25)
 
 @socketio.on('connect')
 def connect():

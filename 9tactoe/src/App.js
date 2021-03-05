@@ -1,5 +1,5 @@
 import React from "react";
-import Game from './game.js'
+import GameBase from './game.js'
 import {
     BrowserRouter as Router,
     Switch,
@@ -50,9 +50,7 @@ function Main() {
                 Insert game code
                 <input
                     name="numberOfGuests"
-                    type="number"
-                    value={this.state.numberOfGuests}
-                    onChange={this.handleInputChange} />
+                    type="number" />
             </label>
             <button className="join" onClick={joinGame()}>
                 Join Game
@@ -66,7 +64,7 @@ function GameWithID() {
 
     return (
         <SocketContext.Provider value={socket}>
-            <Game gid={gid} />
+            <GameBase gid={gid} />
         </SocketContext.Provider>
     )
 }
@@ -76,5 +74,5 @@ function createGame() {
 }
 
 function joinGame() {
-    window.location.href = destination;
+    //window.location.href = "http://google.com";
 }
