@@ -1,14 +1,7 @@
 import React from 'react'
 import SuperBoard from './superboard.js'
-import openSocket from 'socket.io-client'
 import SocketContext from './socket-context'
 import ChatBox from './chatbox.js'
-
-const port = '1337';
-//For remote games, change this to the ip of the host machine
-const ip = '0.0.0.0';
-const socket = openSocket('http://' + ip + ':' + port);
-
 
 class Game extends React.Component {
   constructor(props) {
@@ -53,6 +46,8 @@ class Game extends React.Component {
         this.setState({status: 'You lose!', yourTurn: false})
       }
     });
+
+    socket.emit('join', {gid:props, username:this.state.x_or_o})
   }
 
   handleClick(i,j) {
@@ -80,17 +75,13 @@ class Game extends React.Component {
         <div className="game-info">
           <div className="status">{status}</div>
           <div>
-            <SocketContext.Provider value={socket}>
-              <ChatBox username={username}/>
-            </SocketContext.Provider>
+            <ChatBox username={username}/>
           </div>
         </div>
       </div>
     );
   }
 }
-
-
 
 function initBoards() {
   var boards = new Array(9);
@@ -103,4 +94,10 @@ function initBoards() {
   return boards;
 }
 
-export default Game
+const GameWithSocket = props => (
+  <SocketContext.Consumer>
+  {socket => <Game {...props} socket={socket} />}
+  </SocketContext.Consumer>
+)
+
+export default GameWithSocket
