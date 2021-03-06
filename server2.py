@@ -16,10 +16,12 @@ def connect():
     print("Someone connected to websocket!")
 
 @socketio.on('create')
-def createGame():
+def createGame(object):
     gid = gameManager.createGame()
     dest = "/" + gid
     socketio.emit('redirect', dest, room=request.sid)
+    print("Game created! gid=" + gid)
+
 
 @socketio.on('join')
 def joinGame(object):

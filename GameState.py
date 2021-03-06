@@ -1,6 +1,6 @@
 class GameState():
     def __init__(self):
-        reset()
+        self.reset()
 
     def reset(self):
         self.boards = [['' for i in range(9)] for i in range(9)]

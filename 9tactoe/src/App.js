@@ -7,13 +7,14 @@ import {
     useParams
 } from "react-router-dom";
 import SocketContext from './socket-context'
-import openSocket from 'socket.io-client'
+import io from 'socket.io-client'
 
 
 const port = '1337';
 //For remote games, change this to the ip of the host machine
 const ip = '0.0.0.0';
-const socket = openSocket('http://' + ip + ':' + port);
+const socket = io('http://' + ip + ':' + port);
+var gid = "";
 
 // Params are placeholders in the URL that begin
 // with a colon, like the `:id` param defined in
@@ -40,16 +41,14 @@ export default function App() {
 function Main() {
     return (
         <div>
-            <button className="create" onClick={createGame()}>
+            <button className="create" onClick={() => createGame()}>
                 Create Game
             </button>
             <label>
                 Insert game code
-                <input
-                    name="numberOfGuests"
-                    type="number" />
+                <input value={gid} onChange={(evt) => updateGid(evt)}/>
             </label>
-            <button className="join" onClick={joinGame()}>
+            <button className="join" onClick={() => joinGame()}>
                 Join Game
             </button>
         </div>
@@ -58,6 +57,8 @@ function Main() {
 
 function GameWithID() {
     let { gid } = useParams();
+
+    console.log(gid)
 
     return (
         <SocketContext.Provider value={socket}>
@@ -71,5 +72,9 @@ function createGame() {
 }
 
 function joinGame() {
-    //window.location.href = "http://google.com";
+    window.location.href = "/" + gid;
 }
+
+function updateGid(evt) {
+    gid += evt.target.value
+} 

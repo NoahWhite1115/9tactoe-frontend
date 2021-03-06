@@ -1,5 +1,5 @@
 import uuid
-import GameState
+from GameState import GameState
 
 class GameManager():
     def __init__(self, timeout):
@@ -13,10 +13,10 @@ class GameManager():
         while gid in self.game_hash:
             gid = uuid.uuid4().hex[:8].upper()
 
-        self.game_hash[id] = createGameMeta()
+        self.game_hash[id] = self.createGameMeta()
 
         self.game_count += 1
-        return id
+        return gid
 
     def get_game(self, gid):
         return self.game_hash[gid]
@@ -30,14 +30,15 @@ class GameManager():
         game.addPlayer(sid)
 
     def removePlayer(self, sid):
-        gid = player_hash[sid]
+        #TODO: Safety proof this
+        gid = self.player_hash[sid]
         game = self.game_hash[gid]
         game.removePlayer(sid)
         del self.player_hash[sid]
 
 class GameMeta():
     def __init__(self):
-        self.gameState = makeGame()
+        self.gameState = self.makeGame()
         self.players = {}
         self.spectators = []
 
