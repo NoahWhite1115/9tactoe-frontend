@@ -9,9 +9,9 @@ class GameManager():
         self.player_hash = {}
 
     def createGame(self):
-        id = uuid.uuid4().hex[:8].upper()
-        while id in self.game_hash:
-            id = uuid.uuid4().hex[:8].upper()
+        gid = uuid.uuid4().hex[:8].upper()
+        while gid in self.game_hash:
+            gid = uuid.uuid4().hex[:8].upper()
 
         self.game_hash[id] = createGameMeta()
 
@@ -25,15 +25,15 @@ class GameManager():
         return GameMeta()
 
     def addPlayer(self, gid, sid, username):
-        player_hash[sid] = gid
-        game = game_hash[gid]
+        self.player_hash[sid] = gid
+        game = self.game_hash[gid]
         game.addPlayer(sid)
 
     def removePlayer(self, sid):
         gid = player_hash[sid]
-        game = game_hash[gid]
+        game = self.game_hash[gid]
         game.removePlayer(sid)
-        del player_hash[sid]
+        del self.player_hash[sid]
 
 class GameMeta():
     def __init__(self):

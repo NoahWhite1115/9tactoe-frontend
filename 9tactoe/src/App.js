@@ -4,7 +4,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
     useParams
 } from "react-router-dom";
 import SocketContext from './socket-context'
@@ -21,8 +20,6 @@ const socket = openSocket('http://' + ip + ':' + port);
 // the route in this example. A similar convention
 // is used for matching dynamic segments in other
 // popular web frameworks like Rails and Express.
-
-socket.on('redirect')
 
 export default function App() {
     return (
