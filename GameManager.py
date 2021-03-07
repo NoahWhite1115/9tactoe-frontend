@@ -30,11 +30,13 @@ class GameManager():
         game.addPlayer(sid)
 
     def removePlayer(self, sid):
-        #TODO: Safety proof this
-        gid = self.player_hash[sid]
-        game = self.game_hash[gid]
-        game.removePlayer(sid)
-        del self.player_hash[sid]
+        try: 
+            gid = self.player_hash[sid]
+            game = self.game_hash[gid]
+            game.removePlayer(sid)
+            del self.player_hash[sid]
+        except(KeyError):
+            return 
 
 class GameMeta():
     def __init__(self):
