@@ -15,21 +15,7 @@ const port = '1337';
 const ip = '0.0.0.0';
 const socket = io('http://' + ip + ':' + port);
 
-class App extends React.Component{
-    constructor(props){
-        super(props)
-
-        socket.on('createResponse', createResponse => {
-            if(createResponse=="failure"){
-                return(null);
-            } else {
-                gid = createResponse
-                window.location.href = "/" + gid;
-            }
-        });
-    }
-
-    GameWithID() {
+function GameWithID() {
         let { gid } = useParams();
     
         console.log(gid)
@@ -41,17 +27,32 @@ class App extends React.Component{
         )
     }
 
+class App extends React.Component{
+    constructor(props){
+        super(props)
+
+        socket.on('createResponse', createResponse => {
+            if(createResponse==="failure"){
+                return(null);
+            } else {
+                var gid = createResponse
+                window.location.href = "/" + gid;
+            }
+        });
+    }
+
+
     render() {
         return (
             <Router>
                 <div>
                     <Switch>
+		        <Route path="/:gid" children={<GameWithID />} />
                         <Route path="/">
                             <Main />
                         </Route>
     
-                        <Route path="/:gid" children={<GameWithID />} />
-                    </Switch>
+		    </Switch>
                 </div>
             </Router>
         );
@@ -71,27 +72,29 @@ class Main extends React.Component{
     }
 
     joinGame() {
-        window.location.href = "/" + gid;
+        window.location.href = "/" + this.state.gid;
     } 
 
     updateGid(evt) {
-        gid += evt.target.value
+        this.setState({gid: evt.target.value})
     }
 
     render(){
         return (
             <div>
-                <button className="create" onClick={() => createGame()}>
+                <button className="create" onClick={() => this.createGame()}>
                     Create Game
                 </button>
                 <label>
                     Insert game code
-                    <input value={this.state.gid} onChange={(evt) => updateGid(evt)}/>
+                    <input value={this.state.gid} onChange={(evt) => this.updateGid(evt)}/>
                 </label>
-                <button className="join" onClick={() => joinGame()}>
+                <button className="join" onClick={() => this.joinGame()}>
                     Join Game
                 </button>
             </div>
         )
     }
 }
+
+export default App
