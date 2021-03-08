@@ -16,24 +16,24 @@ const ip = '0.0.0.0';
 const socket = io('http://' + ip + ':' + port);
 
 function GameWithID() {
-        let { gid } = useParams();
-    
-        console.log(gid)
-    
-        return (
-            <SocketContext.Provider value={socket}>
-                <GameBase gid={gid} />
-            </SocketContext.Provider>
-        )
-    }
+    let { gid } = useParams();
 
-class App extends React.Component{
-    constructor(props){
+    console.log(gid)
+
+    return (
+        <SocketContext.Provider value={socket}>
+            <GameBase gid={gid} />
+        </SocketContext.Provider>
+    )
+}
+
+class App extends React.Component {
+    constructor(props) {
         super(props)
 
         socket.on('createResponse', createResponse => {
-            if(createResponse==="failure"){
-                return(null);
+            if (createResponse === "failure") {
+                return (null);
             } else {
                 var gid = createResponse
                 window.location.href = "/" + gid;
@@ -41,45 +41,44 @@ class App extends React.Component{
         });
     }
 
-
     render() {
         return (
             <Router>
                 <div>
                     <Switch>
-		        <Route path="/:gid" children={<GameWithID />} />
+                        <Route path="/:gid" children={<GameWithID />} />
                         <Route path="/">
                             <Main />
                         </Route>
-    
-		    </Switch>
+
+                    </Switch>
                 </div>
             </Router>
         );
     }
 }
 
-class Main extends React.Component{
-    constructor(props){
+class Main extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
             gid: "",
         }
     }
-    
+
     createGame() {
         socket.emit('create', {})
     }
 
     joinGame() {
         window.location.href = "/" + this.state.gid;
-    } 
-
-    updateGid(evt) {
-        this.setState({gid: evt.target.value})
     }
 
-    render(){
+    updateGid(evt) {
+        this.setState({ gid: evt.target.value })
+    }
+
+    render() {
         return (
             <div>
                 <button className="create" onClick={() => this.createGame()}>
@@ -87,7 +86,7 @@ class Main extends React.Component{
                 </button>
                 <label>
                     Insert game code
-                    <input value={this.state.gid} onChange={(evt) => this.updateGid(evt)}/>
+                    <input value={this.state.gid} onChange={(evt) => this.updateGid(evt)} />
                 </label>
                 <button className="join" onClick={() => this.joinGame()}>
                     Join Game

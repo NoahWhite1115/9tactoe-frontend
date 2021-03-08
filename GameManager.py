@@ -27,7 +27,7 @@ class GameManager():
     def addPlayer(self, gid, sid, username):
         self.player_hash[sid] = gid
         game = self.game_hash[gid]
-        game.addPlayer(sid)
+        return(game.addPlayer(sid))
 
     def removePlayer(self, sid):
         try: 
@@ -60,11 +60,14 @@ class NineXOGameMeta(GameMeta):
         if (players['X'] == None):
             print("It was player X!")
             self.players['X'] = sid
+            return 'X'
         elif (players['O'] == None):
             print("It was player O!")
             self.players['O'] = sid
+            return 'O'
         else:
             self.spectators.append(sid)
+            return 'Spec'
 
     def removePlayer(self, sid):
         if (players['X'] == sid):
