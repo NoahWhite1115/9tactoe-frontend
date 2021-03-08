@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app)
 
-gameManager = NineXOGameManager(25)
+gameManager = NineXOGameManager(5)
 
 @socketio.on('connect')
 def connect():
@@ -19,15 +19,22 @@ def connect():
 def createGame(object):
     gid = gameManager.createGame()
     dest = "/" + gid
-    socketio.emit('redirect', dest, room=request.sid)
+    socketio.emit('createResponse', dest, room=request.sid)
     print("Game created! gid=" + gid)
-
 
 @socketio.on('join')
 def joinGame(object):
-    [gid, username] = object.values()
-    gameManager.addPlayer(gid, request.sid, username)
+    [gid] = object.values()
+    role = gameManager.addPlayer(gid, request.sid)
     socketio.enter_room(request.sid, gid)
+
+    socketio.emit('joinResponse', True)
+    socketio.emit('role', role)
+
+    #This is a kludge; fix later
+    #in fact, a lot of this needs refactoring
+    if (role == 'O'):
+        socketio.emit('turn', 'X')
     
 @socketio.on('disconnect')
 def disconnect():
