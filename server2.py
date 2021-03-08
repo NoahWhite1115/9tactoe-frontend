@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 from flask_cors import CORS
 from GameManager import NineXOGameManager, NineXOGameMeta
 
@@ -24,9 +24,11 @@ def createGame(object):
 
 @socketio.on('join')
 def joinGame(object):
+    gameManager.get_list()
+
     [gid] = object.values()
     role = gameManager.addPlayer(gid, request.sid)
-    socketio.enter_room(request.sid, gid)
+    join_room(gid)
 
     socketio.emit('joinResponse', True)
     socketio.emit('role', role)

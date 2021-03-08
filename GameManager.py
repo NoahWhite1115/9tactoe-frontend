@@ -9,14 +9,19 @@ class GameManager():
         self.player_hash = {}
 
     def createGame(self):
-        gid = uuid.uuid4().hex[:8].upper()
+        gid = uuid.uuid4().hex[:8].lower()
         while gid in self.game_hash:
-            gid = uuid.uuid4().hex[:8].upper()
+            gid = uuid.uuid4().hex[:8].lower()
 
-        self.game_hash[id] = self.createGameMeta()
+        self.game_hash[gid] = self.createGameMeta()
 
         self.game_count += 1
         return gid
+
+    def get_list(self):
+        print(len(self.game_hash))
+        for i in self.game_hash.keys():
+            print(i)
 
     def get_game(self, gid):
         return self.game_hash[gid]
@@ -56,12 +61,12 @@ class NineXOGameMeta(GameMeta):
         super().__init__()
         self.players = players = {'X': None, 'O': None}
 
-    def addPlayer(self, sid, username):
-        if (players['X'] == None):
+    def addPlayer(self, sid):
+        if (self.players['X'] == None):
             print("It was player X!")
             self.players['X'] = sid
             return 'X'
-        elif (players['O'] == None):
+        elif (self.players['O'] == None):
             print("It was player O!")
             self.players['O'] = sid
             return 'O'
@@ -70,11 +75,11 @@ class NineXOGameMeta(GameMeta):
             return 'Spec'
 
     def removePlayer(self, sid):
-        if (players['X'] == sid):
-            players['X'] = None
+        if (self.players['X'] == sid):
+            self.players['X'] = None
 
-        elif (players['O'] == sid):
-            players['O'] = None
+        elif (self.players['O'] == sid):
+            self.players['O'] = None
 
         #TODO: error proof this 
         else:
