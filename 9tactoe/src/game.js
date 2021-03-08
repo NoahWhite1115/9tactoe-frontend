@@ -49,7 +49,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this.props.socket.emit('join', { gid: props, username: this.state.role })
+    this.props.socket.emit('join', { gid: props })
   }
 
   handleClick(i, j) {
