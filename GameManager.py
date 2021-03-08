@@ -24,7 +24,7 @@ class GameManager():
     def createGameMeta(self):
         return GameMeta()
 
-    def addPlayer(self, gid, sid, username):
+    def addPlayer(self, gid, sid):
         self.player_hash[sid] = gid
         game = self.game_hash[gid]
         return(game.addPlayer(sid))
