@@ -35,10 +35,14 @@ class App extends React.Component {
             if (createResponse === "failure") {
                 return (null);
             } else {
-                var gid = createResponse
-                window.location.href = "/" + gid;
+                var gid = createResponse;
+                this.joinGame(gid);
             }
         });
+    }
+
+    joinGame(gid) {
+        window.location.href = "/" + gid;
     }
 
     render() {

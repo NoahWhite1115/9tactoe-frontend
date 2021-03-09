@@ -24,14 +24,15 @@ def createGame(object):
 
 @socketio.on('join')
 def joinGame(object):
-    gameManager.get_list()
-
+    #need a try/catch here 
     [gid] = object.values()
     role = gameManager.addPlayer(gid, request.sid)
     join_room(gid)
 
     socketio.emit('joinResponse', True)
     socketio.emit('role', role)
+
+    #add message from system just to player here
 
     #This is a kludge; fix later
     #in fact, a lot of this needs refactoring
@@ -66,6 +67,7 @@ def click(object):
             socketio.emit('wonboards', wonBoards, room=gid)
             socketio.emit('lastPlayed', lastPlayed, room=gid)
             
+            #gotta fix this too
             if gameState.isGameWon():
                 socketio.emit('victory',boardWin(wonBoards))
                 gameState.reset()

@@ -15,6 +15,14 @@ class Game extends React.Component {
       status: 'Connecting to game...',
     }
 
+    this.props.socket.on('joinResponse', response => {
+      if (response === true) {
+        this.setState({status: "Connected to game. Waiting for another player..." })
+      } else {
+        this.setState({status: "An error occurred while connecting. Please make sure your link is correct."})
+      }
+    })
+
     this.props.socket.on('boards', boards => {
       this.setState({ boards: boards })
     });
@@ -49,7 +57,8 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this.props.socket.emit('join', { gid: this.props.gid })
+    //Need a timeout for this
+    this.props.socket.emit('join', { gid: this.props.gid });
   }
 
   handleClick(i, j) {
