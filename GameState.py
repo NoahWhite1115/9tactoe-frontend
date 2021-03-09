@@ -40,7 +40,10 @@ class GameState():
         self.turn)
 
     def isGameWon(self):
-        return boardWin(wonBoards) != ""
+        return self.boardWin(self.wonBoards) != ""
+
+    def checkWhoWon(self):
+        return self.boardWin(self.wonBoards)
 
     def boardWin(self, board):
         lines = [

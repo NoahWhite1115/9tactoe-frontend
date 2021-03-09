@@ -63,7 +63,7 @@ class Game extends React.Component {
 
   handleClick(i, j) {
     console.log("Sending click: " + i + " " + j);
-    this.props.socket.emit('click', { i: i, j: j });
+    this.props.socket.emit('click', {gid: this.props.gid, i: i, j: j });
   }
 
   render() {

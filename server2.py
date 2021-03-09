@@ -31,8 +31,7 @@ def joinGame(object):
 
     socketio.emit('joinResponse', True)
     socketio.emit('role', role)
-
-    #add message from system just to player here
+    socketio.emit('message',{"username":"System", "content": "You are " + role}, room=request.sid)
 
     #This is a kludge; fix later
     #in fact, a lot of this needs refactoring
@@ -69,7 +68,7 @@ def click(object):
             
             #gotta fix this too
             if gameState.isGameWon():
-                socketio.emit('victory',boardWin(wonBoards))
+                socketio.emit('victory', gameState.checkWhoWon(), room=gid)
                 gameState.reset()
 
             gameState.togglePlayer()
