@@ -52,6 +52,9 @@ class GameMeta():
     def makeGame(self):
         return None
 
+    def getState(self):
+        return self.gameState
+
 class NineXOGameManager(GameManager):
     def createGameMeta(self):
         return NineXOGameMeta()
