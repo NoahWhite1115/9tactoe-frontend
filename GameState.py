@@ -15,8 +15,8 @@ class GameState():
         self.lastPlayed = -1 if wonBoards[j] != '' else j
 
     def checkIfMoveValid(self, i, j):
-        rightBoard = (i != lastPlayed and lastPlayed != -1)
-        if (boards[i][j] != '' or rightBoard or wonBoards[i] or boardWin(wonBoards)):
+        rightBoard = (i != self.lastPlayed and self.lastPlayed != -1)
+        if (self.boards[i][j] != '' or rightBoard or self.wonBoards[i] or self.boardWin(self.wonBoards)):
             return False
         return True
 
@@ -25,10 +25,10 @@ class GameState():
         self.boards[i][j] = turn
 
         #check if the board is won
-        updateWonBoards(i)
+        self.updateWonBoards(i)
 
         #check if the next board to play on is won
-        updateLastPlayed(j)
+        self.updateLastPlayed(j)
 
     def togglePlayer(self):
         self.turn = 'O' if self.turn == 'X' else 'X'
