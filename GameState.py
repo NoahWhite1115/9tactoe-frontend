@@ -22,7 +22,7 @@ class GameState():
 
     def makeMove(self, i, j):
         #set the space to X or O
-        self.boards[i][j] = turn
+        self.boards[i][j] = self.turn
 
         #check if the board is won
         self.updateWonBoards(i)
