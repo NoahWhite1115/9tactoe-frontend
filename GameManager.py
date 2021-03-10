@@ -96,7 +96,7 @@ class NineXOGameMeta(GameMeta):
             print("Wrong player clicked!")
             return False
 
-        if self.players['X'] == None or players['O'] == None:
+        if self.players['X'] == None or self.players['O'] == None:
             print("Not enough players connected!")
             return False
 
