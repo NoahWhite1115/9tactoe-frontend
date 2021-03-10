@@ -58,7 +58,7 @@ def click(object):
     if gameMeta.checkPlayer(request.sid):
         if gameState.checkIfMoveValid(i,j):
             
-            gameState.make_move(i,j)
+            gameState.makeMove(i,j)
 
             (boards, wonBoards, lastPlayed, _) = gameState.stateSummary()
 
