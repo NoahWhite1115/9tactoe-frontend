@@ -45,12 +45,16 @@ class Chatroom extends React.Component {
 
         this.props.socket.emit("post_submit", {
           gid: this.props.gid,
-          username: this.props.username,
+          username: this.state.username,
           content: ReactDOM.findDOMNode(this.refs.msg).value
         });
         this.setState(() => {
             ReactDOM.findDOMNode(this.refs.msg).value = "";
         });
+    }
+
+    updateUsername(e) {
+        this.setState({ username: evt.target.value })
     }
 
     render() {
@@ -59,6 +63,7 @@ class Chatroom extends React.Component {
 
         return (
             <div className="chatroom">
+                <input value={this.state.username} onChange={(evt) => this.updateUsername(evt)} />
                 <ul className="messages" ref="messages">
                     {
                         messages.map((message) => 
