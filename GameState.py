@@ -9,10 +9,10 @@ class GameState():
         self.turn = 'X'
 
     def updateWonBoards(self, i):
-        self.wonBoards[i] = boardWin(self.boards[i])
+        self.wonBoards[i] = self.boardWin(self.boards[i])
 
     def updateLastPlayed(self, j):
-        self.lastPlayed = -1 if wonBoards[j] != '' else j
+        self.lastPlayed = -1 if self.wonBoards[j] != '' else j
 
     def checkIfMoveValid(self, i, j):
         rightBoard = (i != self.lastPlayed and self.lastPlayed != -1)
@@ -34,7 +34,7 @@ class GameState():
         self.turn = 'O' if self.turn == 'X' else 'X'
 
     def stateSummary(self):
-        return (self.board, 
+        return (self.boards, 
         self.wonBoards, 
         self.lastPlayed, 
         self.turn)
