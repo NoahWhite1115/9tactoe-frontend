@@ -12,7 +12,7 @@ import io from 'socket.io-client'
 
 const port = '1337';
 //For remote games, change this to the ip of the host machine
-const ip = '0.0.0.0';
+const ip = '10.0.0.123';
 const socket = io('http://' + ip + ':' + port);
 
 function GameWithID() {
@@ -42,7 +42,7 @@ class App extends React.Component {
     }
 
     joinGame(gid) {
-        window.location.href = "/" + gid;
+	window.location.href = window.location.origin + gid;
     }
 
     render() {

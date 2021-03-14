@@ -54,7 +54,7 @@ class Chatroom extends React.Component {
     }
 
     updateUsername(e) {
-        this.setState({ username: evt.target.value })
+        this.setState({ username: e.target.value })
     }
 
     render() {
