@@ -2,6 +2,7 @@ import React from 'react'
 import SuperBoard from './superboard.js'
 import SocketContext from './socket-context'
 import ChatBox from './chatbox.js'
+import Modal from './Modal.js';
 
 class Game extends React.Component {
   constructor(props) {
@@ -13,11 +14,17 @@ class Game extends React.Component {
       lastPlayed: -1,
       yourTurn: false,
       status: 'Connecting to game...',
+      show: false,
+      username = ''
     }
+
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
 
     this.props.socket.on('joinResponse', response => {
       if (response === true) {
         this.setState({status: "Connected to game. Waiting for another player..." })
+        this.showModal()
       } else {
         this.setState({status: "An error occurred while connecting. Please make sure your link is correct."})
       }
@@ -56,6 +63,19 @@ class Game extends React.Component {
     });
   }
 
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
+
+  updateUsername(evt) {
+    //need to user-proof this somehow 
+    this.setState({ username : evt.target.value})
+  }
+
   componentDidMount() {
     //Need a timeout for this
     this.props.socket.emit('join', { gid: this.props.gid });
@@ -76,6 +96,9 @@ class Game extends React.Component {
 
     return (
       <div className="game">
+        <Modal show={this.state.show} handleClose={this.hideModal}>
+          <input value={this.state.username} onChange={(evt) => this.updateUsername(evt)} />
+        </Modal>
         <div className="game-board">
           <SuperBoard
             boards={boards}

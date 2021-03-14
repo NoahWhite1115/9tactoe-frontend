@@ -53,17 +53,12 @@ class Chatroom extends React.Component {
         });
     }
 
-    updateUsername(e) {
-        this.setState({ username: e.target.value })
-    }
-
     render() {
         const username = this.props.username;
         const { messages } = this.state;
 
         return (
             <div className="chatroom">
-                <input value={this.state.username} onChange={(evt) => this.updateUsername(evt)} />
                 <ul className="messages" ref="messages">
                     {
                         messages.map((message) => 
