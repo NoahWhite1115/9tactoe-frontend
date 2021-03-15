@@ -15,7 +15,7 @@ class Game extends React.Component {
       yourTurn: false,
       status: 'Connecting to game...',
       show: false,
-      username = ''
+      username: ''
     }
 
     this.showModal = this.showModal.bind(this);
@@ -91,7 +91,7 @@ class Game extends React.Component {
     const wonBoards = this.state.wonBoards;
     const lastPlayed = this.state.lastPlayed;
     const status = this.state.status;
-    const username = this.state.role;
+    const username = this.state.username;
     const gid = this.props.gid;
 
     return (

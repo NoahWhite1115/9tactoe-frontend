@@ -45,7 +45,7 @@ class Chatroom extends React.Component {
 
         this.props.socket.emit("post_submit", {
           gid: this.props.gid,
-          username: this.state.username,
+          username: this.props.username,
           content: ReactDOM.findDOMNode(this.refs.msg).value
         });
         this.setState(() => {
