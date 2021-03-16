@@ -2,7 +2,7 @@ import React from 'react'
 import SuperBoard from './superboard.js'
 import SocketContext from './socket-context'
 import ChatBox from './chatbox.js'
-import Modal from './Modal.js';
+import Modal from './modal.js';
 
 class Game extends React.Component {
   constructor(props) {
