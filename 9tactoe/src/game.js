@@ -30,28 +30,20 @@ class Game extends React.Component {
       }
     })
 
-    this.props.socket.on('boards', boards => {
-      this.setState({ boards: boards })
-    });
+    this.props.socket.on('state', (boards, wonBoards, lastPlayed, turn) => {
+      this.setState({ boards: boards });
+      this.setState({ wonBoards: wonBoards });
+      this.setState({ lastPlayed: lastPlayed });
 
-    this.props.socket.on('wonboards', wonBoards => {
-      this.setState({ wonBoards: wonBoards })
-    });
-
-    this.props.socket.on('lastPlayed', lastPlayed => {
-      this.setState({ lastPlayed: lastPlayed })
-    });
-
-    this.props.socket.on('role', role => {
-      this.setState({ role: role })
-    });
-
-    this.props.socket.on('turn', player => {
-      if (player === this.state.role) {
+      if (turn === this.state.role) {
         this.setState({ status: "You're up.", yourTurn: true })
       } else {
         this.setState({ status: player + ' is thinking.', yourTurn: false })
       }
+    });
+
+    this.props.socket.on('role', role => {
+      this.setState({ role: role })
     });
 
     this.props.socket.on('victory', player => {
@@ -82,8 +74,10 @@ class Game extends React.Component {
   }
 
   handleClick(i, j) {
-    console.log("Sending click: " + i + " " + j);
-    this.props.socket.emit('click', {gid: this.props.gid, i: i, j: j });
+    //don't want to send data before usernames are entered
+    if (this.state.show === false){
+      this.props.socket.emit('click', {gid: this.props.gid, i: i, j: j });
+    }
   }
 
   render() {
@@ -97,6 +91,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <Modal show={this.state.show} handleClose={this.hideModal}>
+          <p>Username: </p>
           <input value={this.state.username} onChange={(evt) => this.updateUsername(evt)} />
         </Modal>
         <div className="game-board">
