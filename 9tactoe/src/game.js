@@ -38,7 +38,7 @@ class Game extends React.Component {
       if (gamestate.turn === this.state.role) {
         this.setState({ status: "You're up.", yourTurn: true })
       } else {
-        this.setState({ status: turn + ' is thinking.', yourTurn: false })
+        this.setState({ status: gamestate.turn + ' is thinking.', yourTurn: false })
       }
     });
 
@@ -54,7 +54,7 @@ class Game extends React.Component {
       if (gamestate.turn === this.state.role) {
         this.setState({ status: "You're up.", yourTurn: true })
       } else {
-        this.setState({ status: turn + ' is thinking.', yourTurn: false })
+        this.setState({ status: gamestate.turn + ' is thinking.', yourTurn: false })
       }
     });
 
