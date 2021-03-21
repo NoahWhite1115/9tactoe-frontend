@@ -30,12 +30,12 @@ class Game extends React.Component {
       }
     })
 
-    this.props.socket.on('start_game', (boards, wonBoards, lastPlayed, turn) => {
-      this.setState({ boards: boards });
-      this.setState({ wonBoards: wonBoards });
-      this.setState({ lastPlayed: lastPlayed });
+    this.props.socket.on('start_game', gamestate => {
+      this.setState({ boards: gamestate.boards });
+      this.setState({ wonBoards: gamestate.wonBoards });
+      this.setState({ lastPlayed: gamestate.lastPlayed });
 
-      if (turn === this.state.role) {
+      if (gamestate.turn === this.state.role) {
         this.setState({ status: "You're up.", yourTurn: true })
       } else {
         this.setState({ status: turn + ' is thinking.', yourTurn: false })
@@ -46,12 +46,12 @@ class Game extends React.Component {
       this.setState({ role: role })
     });
 
-    this.props.socket.on('state', (boards, wonBoards, lastPlayed, turn) => {
-      this.setState({ boards: boards });
-      this.setState({ wonBoards: wonBoards });
-      this.setState({ lastPlayed: lastPlayed });
+    this.props.socket.on('state', gamestate => {
+      this.setState({ boards: gamestate.boards });
+      this.setState({ wonBoards: gamestate.wonBoards });
+      this.setState({ lastPlayed: gamestate.lastPlayed });
 
-      if (turn === this.state.role) {
+      if (gamestate.turn === this.state.role) {
         this.setState({ status: "You're up.", yourTurn: true })
       } else {
         this.setState({ status: turn + ' is thinking.', yourTurn: false })
