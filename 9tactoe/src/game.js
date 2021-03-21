@@ -30,6 +30,22 @@ class Game extends React.Component {
       }
     })
 
+    this.props.socket.on('start_game', (boards, wonBoards, lastPlayed, turn) => {
+      this.setState({ boards: boards });
+      this.setState({ wonBoards: wonBoards });
+      this.setState({ lastPlayed: lastPlayed });
+
+      if (turn === this.state.role) {
+        this.setState({ status: "You're up.", yourTurn: true })
+      } else {
+        this.setState({ status: turn + ' is thinking.', yourTurn: false })
+      }
+    });
+
+    this.props.socket.on('role', role => {
+      this.setState({ role: role })
+    });
+
     this.props.socket.on('state', (boards, wonBoards, lastPlayed, turn) => {
       this.setState({ boards: boards });
       this.setState({ wonBoards: wonBoards });
@@ -38,7 +54,7 @@ class Game extends React.Component {
       if (turn === this.state.role) {
         this.setState({ status: "You're up.", yourTurn: true })
       } else {
-        this.setState({ status: player + ' is thinking.', yourTurn: false })
+        this.setState({ status: turn + ' is thinking.', yourTurn: false })
       }
     });
 
