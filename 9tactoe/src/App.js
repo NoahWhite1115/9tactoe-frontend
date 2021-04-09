@@ -9,10 +9,10 @@ import {
 import SocketContext from './socket-context'
 import io from 'socket.io-client'
 
-
+//need to put these in a config file
 const port = '1337';
 //For remote games, change this to the ip of the host machine
-const ip = '10.0.0.123';
+const ip = '9tactoe.whitestelephant.net';
 const socket = io('http://' + ip + ':' + port);
 
 function GameWithID() {
